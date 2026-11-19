@@ -4,6 +4,15 @@
 
 # aiyu — AI 譯語
 
+> **這是 [lancetw/aiyu](https://github.com/lancetw/aiyu) 的個人 fork。** 從上游 `00dbc14`（0.6.2）分出，差異只有：
+>
+> - **claude 呼叫加上 `--setting-sources ""`**（`host/aiyu-host.js` 的 `runCli`）：不載入使用者層的 `CLAUDE.md`、hooks、記憶。
+>   - 為什麼：未帶時，每批字幕都會夾帶使用者自己的設定一起送出。實測（claude 2.1.328）翻同一句 "Hello world"，輸入從 8,345 tokens 降到 634 tokens，譯文相同；hooks 也不再每批觸發。
+>   - 取捨：舊版 claude CLI 若不認得 `--setting-sources` 會直接失敗；只改 host，擴充送來的 payload 不變，Web Store 版擴充照常可用。
+>   - 驗證：`host/claude-args.test.js`（假 claude 記錄 argv）。
+>
+> 同步上游：`git fetch upstream && git merge upstream/master`，再跑 `node host/install.js --browsers=chrome` 重新部署 host。
+
 一個專注於 **YouTube 字幕翻譯** 的 Chrome 擴充套件，呼叫本機的 `claude`、`codex` 或 `agy`（Antigravity）CLI，把字幕翻成 **台灣正體中文**（也可翻譯網頁上選取的文字）。
 
 > **狀態**：0.6.2

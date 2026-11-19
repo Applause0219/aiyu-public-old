@@ -343,6 +343,8 @@ function runCli(cli, prompt, model, context, effort) {
       args = [
         "-p",
         "--tools", "",
+        // 不載入使用者層的 CLAUDE.md／hooks／記憶：每批字幕少送約 7.7k tokens，hooks 也不會每次觸發
+        "--setting-sources", "",
         "--system-prompt", prompt.system,
         "--strict-mcp-config",
         "--no-session-persistence",
